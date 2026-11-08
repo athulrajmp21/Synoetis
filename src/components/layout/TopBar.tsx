@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import {
-  Search,
-  Plus,
-  Moon,
-  Sun,
-  Laptop,
-  Database,
-  CheckCircle2,
-} from "lucide-react";
+import { Search, Plus, Moon, Sun, Laptop } from "lucide-react";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useNavigationStore } from "@/stores/useNavigationStore";
-import { systemService } from "@/services/api";
-import { SystemInfo } from "@/types/system";
 import { MAIN_NAV_ITEMS, BOTTOM_NAV_ITEMS } from "./navConfig";
 
 export const TopBar: React.FC = () => {
   const location = useLocation();
   const { theme, setTheme } = useThemeStore();
   const { setSearchOpen, setQuickCaptureOpen } = useNavigationStore();
-  const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
-
-  useEffect(() => {
-    systemService.getSystemInfo().then(setSystemInfo).catch(console.error);
-  }, []);
 
   // Determine current active page label
   const allNav = [...MAIN_NAV_ITEMS, ...BOTTOM_NAV_ITEMS];
@@ -65,17 +50,7 @@ export const TopBar: React.FC = () => {
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
-        {/* SQLite Database Status Pill */}
-        <div
-          title={systemInfo ? `Database: ${systemInfo.db_path} (${systemInfo.total_tables} tables active)` : "Connecting to SQLite..."}
-          className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-mono"
-        >
-          <Database className="w-3 h-3 text-indigo-500" />
-          <span>SQLite</span>
-          <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-        </div>
-
+      <div className="flex items-center gap-2.5">
         {/* Quick Capture Button */}
         <button
           onClick={() => setQuickCaptureOpen(true)}

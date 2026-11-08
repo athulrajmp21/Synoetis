@@ -1,5 +1,5 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+// Always prevents terminal / console window on Windows
+#![windows_subsystem = "windows"]
 
 fn main() {
     life_os_lib::run()
