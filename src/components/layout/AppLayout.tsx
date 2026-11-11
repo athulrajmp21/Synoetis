@@ -5,11 +5,13 @@ import { TopBar } from "./TopBar";
 import { CommandSearchModal } from "./CommandSearchModal";
 import { QuickCaptureModal } from "./QuickCaptureModal";
 import { FocusTimerModal } from "@/components/focus/FocusTimerModal";
+import { UpdateModal } from "@/components/update/UpdateModal";
 import { GlobalContextMenu } from "./GlobalContextMenu";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useNavigationStore } from "@/stores/useNavigationStore";
 import { useFocusTimerStore } from "@/stores/useFocusTimerStore";
 import { useKeybindingsStore } from "@/stores/useKeybindingsStore";
+import { useUpdateStore } from "@/stores/useUpdateStore";
 
 export const AppLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -134,6 +136,14 @@ export const AppLayout: React.FC = () => {
     navigate,
   ]);
 
+  // Background check for updates after initial load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      useUpdateStore.getState().checkForUpdates(true);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#FAF8F5] dark:bg-[#0C0B0A] text-stone-900 dark:text-stone-100 font-sans">
       <Sidebar />
@@ -148,6 +158,7 @@ export const AppLayout: React.FC = () => {
       <CommandSearchModal />
       <QuickCaptureModal />
       <FocusTimerModal />
+      <UpdateModal />
       <GlobalContextMenu />
     </div>
   );

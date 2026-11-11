@@ -13,12 +13,16 @@ import {
   Square,
   Copy,
   X,
+  Download,
+  RefreshCw,
+  Sparkles,
 } from "lucide-react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useNavigationStore } from "@/stores/useNavigationStore";
 import { useFocusTimerStore } from "@/stores/useFocusTimerStore";
 import { useKeybindingsStore } from "@/stores/useKeybindingsStore";
+import { useUpdateStore } from "@/stores/useUpdateStore";
 import { systemService, settingsService } from "@/services/api";
 import { MAIN_NAV_ITEMS, BOTTOM_NAV_ITEMS } from "./navConfig";
 
@@ -28,6 +32,12 @@ export const TopBar: React.FC = () => {
   const { setSearchOpen, setQuickCaptureOpen } = useNavigationStore();
   const { mode, timeLeft, isRunning, setModalOpen, startTimer, pauseTimer } = useFocusTimerStore();
   const { keybindings } = useKeybindingsStore();
+  const {
+    updateInfo,
+    status: updateStatus,
+    downloadProgress,
+    setModalOpen: setUpdateModalOpen,
+  } = useUpdateStore();
 
   const searchShortcut = keybindings.omnisearch?.binding || "Ctrl+K";
 
@@ -142,6 +152,32 @@ export const TopBar: React.FC = () => {
 
       {/* Right: Focus Timer, Quick Action, Theme Toggle, Window Controls */}
       <div className="flex items-center gap-2" data-tauri-drag-region="false">
+        {/* Dynamic In-App Update Button like VS Code / Antigravity */}
+        {updateInfo && (
+          <button
+            onClick={() => setUpdateModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-medium text-xs shadow-xs transition animate-pulse cursor-pointer shrink-0 border border-amber-400/40"
+            title={`Synoetis v${updateInfo.version} is available. Click to download and install.`}
+          >
+            {updateStatus === "downloading" ? (
+              <>
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                <span>Downloading {downloadProgress}%</span>
+              </>
+            ) : updateStatus === "ready" ? (
+              <>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Restart to Update</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-3.5 h-3.5" />
+                <span>Update v{updateInfo.version} • Download & Install</span>
+              </>
+            )}
+          </button>
+        )}
+
         {/* Prominent Focus Timer Pill */}
         <div
           className={`flex items-center gap-2 px-3 py-1 rounded-xl border transition select-none shadow-xs ${

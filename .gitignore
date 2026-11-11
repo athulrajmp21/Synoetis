@@ -30,8 +30,13 @@ src-tauri/target/
 *.exe
 *.msi
 *.zip
+*.sig
 
 # SQLite local databases
 *.db
 *.db-wal
 *.db-shm
+
+# Updater private keys
+.updater-keys/
+*.key

@@ -44,5 +44,13 @@
         "installMode": "currentUser"
       }
     }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJBQUU2RURENzIzOEFFOUMKUldTY3JqaHkzVzZ1S3ExajMzS1pmbWp1MGV2SXhEWk53L094QnA4UGM0ZTVRR09YQXRPOWE1bUsK",
+      "endpoints": [
+        "https://github.com/athulrajmp21/Synoetis/releases/latest/download/latest.json"
+      ]
+    }
   }
 }

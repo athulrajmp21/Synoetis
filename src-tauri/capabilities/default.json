@@ -18,6 +18,7 @@
     "core:webview:default",
     "opener:default",
     "opener:allow-open-path",
-    "notification:default"
+    "notification:default",
+    "updater:default"
   ]
 }

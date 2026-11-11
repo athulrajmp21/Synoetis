@@ -22,11 +22,14 @@ import {
   Edit3,
   AlertCircle,
   Sparkles,
+  Download,
+  ArrowUpCircle,
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useKeybindingsStore, normalizeKeyboardEvent, KeybindingDef } from "@/stores/useKeybindingsStore";
+import { useUpdateStore } from "@/stores/useUpdateStore";
 import { systemService, settingsService, academicService, focusService } from "@/services/api";
 import { SystemInfo } from "@/types/system";
 import { AppSetting, ThemeMode } from "@/types/settings";
@@ -36,6 +39,16 @@ export const SettingsPage: React.FC = () => {
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
   const [settingsList, setSettingsList] = useState<AppSetting[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // In-App Updater Store
+  const {
+    status: updateStatus,
+    updateInfo,
+    downloadProgress,
+    checkForUpdates,
+    downloadAndInstall,
+    setModalOpen: setUpdateModalOpen,
+  } = useUpdateStore();
 
   // Desktop & Tray Preferences
   const [autostartEnabled, setAutostartEnabled] = useState(false);
@@ -377,6 +390,99 @@ export const SettingsPage: React.FC = () => {
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* SECTION: SOFTWARE UPDATES & AUTO-INSTALLER */}
+      <div className="p-5 rounded-2xl bg-[#FAF8F5] dark:bg-[#141312] border border-stone-200/80 dark:border-stone-800/80 shadow-2xs space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-stone-200/60 dark:border-stone-800/60">
+          <div className="flex items-center gap-2">
+            <ArrowUpCircle className="w-4 h-4 text-amber-500" />
+            <h2 className="text-sm font-semibold text-stone-900 dark:text-stone-100">
+              Software Updates & Auto-Installer
+            </h2>
+          </div>
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-stone-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium">
+            v{systemInfo?.app_version || "1.0.0"}
+          </span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+          <div>
+            <div className="font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
+              <span>Automatic Background Updates</span>
+              {updateStatus === "up-to-date" && (
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono">
+                  ● Up to Date
+                </span>
+              )}
+              {updateStatus === "available" && (
+                <span className="text-[10px] text-amber-600 dark:text-amber-400 font-mono animate-pulse">
+                  ● Update v{updateInfo?.version} Ready
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
+              Checks GitHub Releases for new signed binaries and delivers zero-friction delta updates.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            {updateInfo ? (
+              <Button
+                size="sm"
+                onClick={downloadAndInstall}
+                disabled={updateStatus === "downloading" || updateStatus === "ready"}
+                className="text-xs bg-amber-600 hover:bg-amber-700 text-white font-medium gap-1.5 shadow-sm"
+              >
+                <Download className="w-3.5 h-3.5" />
+                {updateStatus === "downloading"
+                  ? `Downloading (${downloadProgress}%)`
+                  : updateStatus === "ready"
+                  ? "Restarting..."
+                  : `Download and Install v${updateInfo.version}`}
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => checkForUpdates(false)}
+                disabled={updateStatus === "checking"}
+                className="text-xs border-stone-200 dark:border-stone-800"
+              >
+                <RefreshCw
+                  className={`w-3.5 h-3.5 mr-1.5 ${updateStatus === "checking" ? "animate-spin text-amber-500" : ""}`}
+                />
+                {updateStatus === "checking" ? "Checking..." : "Check for Updates"}
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Update Banner when update is found */}
+        {updateInfo && (
+          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-amber-800 dark:text-amber-200 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                Version {updateInfo.version} is ready for installation
+              </span>
+              <button
+                onClick={() => setUpdateModalOpen(true)}
+                className="text-[11px] text-amber-700 dark:text-amber-300 underline cursor-pointer hover:opacity-80"
+              >
+                View Release Notes
+              </button>
+            </div>
+            {updateStatus === "downloading" && (
+              <div className="w-full h-1.5 rounded-full bg-stone-200 dark:bg-stone-800 overflow-hidden">
+                <div
+                  className="h-full bg-amber-500 transition-all duration-200"
+                  style={{ width: `${downloadProgress}%` }}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* SECTION 2: THEME SELECTION */}
