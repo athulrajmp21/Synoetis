@@ -7,7 +7,9 @@ import { AcademicPage } from "@/pages/Academic/AcademicPage";
 import { DsaPage } from "@/pages/DSA/DsaPage";
 import { CareerPage } from "@/pages/Career/CareerPage";
 import { ProjectsPage } from "@/pages/Projects/ProjectsPage";
+import { SnippetsPage } from "@/pages/Snippets/SnippetsPage";
 import { KnowledgePage } from "@/pages/Knowledge/KnowledgePage";
+import { StudyStudioPage } from "@/pages/Study/StudyStudioPage";
 import { ResourcesPage } from "@/pages/Resources/ResourcesPage";
 import { GoalsPage } from "@/pages/Goals/GoalsPage";
 import { HabitsPage } from "@/pages/Habits/HabitsPage";
@@ -28,7 +30,9 @@ export default function App() {
           <Route path="dsa" element={<DsaPage />} />
           <Route path="career" element={<CareerPage />} />
           <Route path="projects" element={<ProjectsPage />} />
+          <Route path="snippets" element={<SnippetsPage />} />
           <Route path="knowledge" element={<KnowledgePage />} />
+          <Route path="study" element={<StudyStudioPage />} />
           <Route path="resources" element={<ResourcesPage />} />
           <Route path="goals" element={<GoalsPage />} />
           <Route path="habits" element={<HabitsPage />} />

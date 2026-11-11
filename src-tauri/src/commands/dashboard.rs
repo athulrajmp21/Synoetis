@@ -29,7 +29,7 @@ pub fn get_dashboard_stats(state: State<'_, AppState>) -> AppResult<DashboardSta
         "SELECT name FROM semesters WHERE status = 'active' LIMIT 1",
         [],
         |row| row.get(0),
-    ).unwrap_or_else(|_| "Semester 4 (Spring)".to_string());
+    ).unwrap_or_else(|_| "Not Set".to_string());
 
     let weekly_study_minutes: i64 = conn.query_row(
         "SELECT COALESCE(SUM(duration_minutes), 0) FROM study_sessions 

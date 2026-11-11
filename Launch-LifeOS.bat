@@ -1,4 +1,4 @@
 @echo off
-echo Starting Life OS Desktop Application...
-start "" "%~dp0src-tauri\target\release\life-os.exe"
+echo Starting Synoetis Desktop Application...
+start "" "%~dp0src-tauri\target\release\synoetis.exe"
 exit

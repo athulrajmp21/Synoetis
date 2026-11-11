@@ -11,19 +11,19 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "secondary", size = "md", children, ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 disabled:opacity-50 disabled:pointer-events-none select-none active:scale-[0.98]";
+      "inline-flex items-center justify-center font-medium rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-400/50 disabled:opacity-50 disabled:pointer-events-none select-none active:scale-[0.98] cursor-pointer";
 
     const variants = {
       primary:
-        "bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm border border-indigo-500/30",
+        "bg-stone-900 hover:bg-stone-800 text-stone-50 dark:bg-stone-100 dark:hover:bg-stone-200 dark:text-stone-900 shadow-xs border border-transparent",
       secondary:
-        "bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-800 dark:text-slate-100 dark:border-slate-700/60",
+        "bg-stone-200/70 hover:bg-stone-200 text-stone-900 border border-stone-300/60 dark:bg-stone-800 dark:hover:bg-stone-700 dark:text-stone-100 dark:border-stone-700/60",
       outline:
-        "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700",
+        "bg-transparent hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-800",
       ghost:
-        "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-transparent",
+        "bg-transparent hover:bg-stone-100 dark:hover:bg-stone-800/60 text-stone-700 dark:text-stone-300 border border-transparent",
       danger:
-        "bg-rose-600 hover:bg-rose-500 text-white shadow-sm border border-rose-500/30",
+        "bg-rose-600 hover:bg-rose-500 text-white shadow-xs border border-rose-500/30",
     };
 
     const sizes = {

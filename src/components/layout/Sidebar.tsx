@@ -12,7 +12,7 @@ export const Sidebar: React.FC = () => {
     return (
       <div className="mb-4">
         {groupTitle && !isSidebarCollapsed && (
-          <div className="px-3 mb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          <div className="px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500">
             {groupTitle}
           </div>
         )}
@@ -25,20 +25,20 @@ export const Sidebar: React.FC = () => {
                 to={item.path}
                 title={isSidebarCollapsed ? item.label : undefined}
                 className={({ isActive }) =>
-                  `group relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  `group relative flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     isActive
-                      ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400 font-semibold"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60"
+                      ? "bg-stone-200/70 text-stone-900 dark:bg-stone-800/80 dark:text-stone-100 font-semibold shadow-2xs"
+                      : "text-stone-600 hover:text-stone-900 hover:bg-stone-100/80 dark:text-stone-400 dark:hover:text-stone-200 dark:hover:bg-stone-900/60"
                   }`
                 }
               >
                 {({ isActive }) => (
                   <>
                     <Icon
-                      className={`w-4 h-4 shrink-0 transition-transform ${
+                      className={`w-3.5 h-3.5 shrink-0 transition-transform ${
                         isActive
-                          ? "text-indigo-600 dark:text-indigo-400 scale-105"
-                          : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
+                          ? "text-stone-900 dark:text-stone-100 scale-105"
+                          : "text-stone-400 group-hover:text-stone-600 dark:text-stone-500 dark:group-hover:text-stone-300"
                       }`}
                     />
 
@@ -46,21 +46,9 @@ export const Sidebar: React.FC = () => {
                       <span className="truncate flex-1">{item.label}</span>
                     )}
 
-                    {!isSidebarCollapsed && item.badge && (
-                      <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium ${
-                          item.badgeVariant === "accent"
-                            ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300"
-                            : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-
-                    {/* Active left indicator line */}
+                    {/* Active left indicator */}
                     {isActive && (
-                      <div className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-indigo-600 dark:bg-indigo-400 rounded-r" />
+                      <div className="absolute left-0 top-1.5 bottom-1.5 w-0.5 bg-stone-900 dark:bg-stone-100 rounded-r" />
                     )}
                   </>
                 )}
@@ -78,44 +66,48 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`h-screen flex flex-col justify-between border-r border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-950 transition-all duration-200 select-none ${
-        isSidebarCollapsed ? "w-16" : "w-64"
+      className={`h-screen flex flex-col justify-between border-r border-stone-200/80 dark:border-stone-800/80 bg-[#FBF9F6] dark:bg-[#0D0C0B] transition-all duration-200 select-none ${
+        isSidebarCollapsed ? "w-16" : "w-60"
       }`}
     >
       {/* Brand Header */}
       <div>
-        <div className="h-14 flex items-center justify-between px-3.5 border-b border-slate-200/80 dark:border-slate-800/80">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold shrink-0 shadow-xs">
-              <Terminal className="w-4 h-4" />
+        <div
+          data-tauri-drag-region
+          className="h-12 flex items-center justify-between px-3.5 border-b border-stone-200/80 dark:border-stone-800/80"
+        >
+          <div className="flex items-center gap-2.5 overflow-hidden" data-tauri-drag-region>
+            <div className="w-6 h-6 rounded-md overflow-hidden bg-stone-900/5 dark:bg-stone-100/5 flex items-center justify-center shrink-0 shadow-2xs border border-stone-200/80 dark:border-stone-800/80">
+              <img src="/logo.png" alt="Synoetis" className="w-5 h-5 object-contain" />
             </div>
             {!isSidebarCollapsed && (
-              <div className="flex flex-col truncate">
-                <span className="font-semibold text-sm tracking-tight text-slate-900 dark:text-slate-100">
-                  Life OS
+              <div className="flex flex-col truncate" data-tauri-drag-region>
+                <span className="font-semibold text-xs tracking-tight text-stone-900 dark:text-stone-100">
+                  Synoetis
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">
-                  v0.1.0 • Desktop
+                <span className="text-[10px] text-stone-400 dark:text-stone-500 font-mono">
+                  Engine v1.0
                 </span>
               </div>
             )}
           </div>
 
           <button
+            data-tauri-drag-region="false"
             onClick={toggleSidebar}
             title={isSidebarCollapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
-            className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1 rounded-md text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
           >
             {isSidebarCollapsed ? (
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5" />
             ) : (
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5" />
             )}
           </button>
         </div>
 
         {/* Scrollable Nav Items */}
-        <div className="p-3 overflow-y-auto max-h-[calc(100vh-140px)]">
+        <div className="p-2.5 overflow-y-auto max-h-[calc(100vh-120px)]">
           {renderNavGroup(coreItems, "Core")}
           {renderNavGroup(academicItems, "Academic & Career")}
           {renderNavGroup(knowledgeItems, "Knowledge & Growth")}
@@ -123,7 +115,7 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Bottom Nav Items & System Status */}
-      <div className="p-3 border-t border-slate-200/80 dark:border-slate-800/80">
+      <div className="p-2.5 border-t border-stone-200/80 dark:border-stone-800/80">
         {renderNavGroup(BOTTOM_NAV_ITEMS)}
       </div>
     </aside>

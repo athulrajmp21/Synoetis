@@ -1,5 +1,6 @@
+// Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![windows_subsystem = "windows"]
 
 fn main() {
-    life_os_lib::run();
+    synoetis_lib::run();
 }

@@ -1,26 +1,31 @@
 [package]
-name = "life-os"
-version = "0.1.0"
-description = "Life OS - Personal Productivity & Knowledge Management Desktop Application"
-authors = ["Life OS Team"]
+name = "synoetis"
+version = "1.0.0"
+description = "Synoetis - Second Brain & Engineering Operating System"
+authors = ["Synoetis Team"]
 edition = "2021"
 
 [lib]
-name = "life_os_lib"
+name = "synoetis_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["tray-icon"] }
 tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-rusqlite = { version = "0.33", features = ["bundled"] }
+rusqlite = { version = "0.33", features = ["bundled", "backup"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 thiserror = "2"
+rfd = "0.18.0"
+tauri-plugin-notification = "2.8.1"
+base64 = "0.23.1"
+winreg = "0.56.0"
 
 [profile.release]
 codegen-units = 1

@@ -108,6 +108,7 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const filteredItems = MENU_ITEMS.filter(
     (item) =>
@@ -118,6 +119,17 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
+
+  // Ensure selected item scrolls into view when navigating with Arrow Up / Down
+  useEffect(() => {
+    const activeItem = itemRefs.current[selectedIndex];
+    if (activeItem) {
+      activeItem.scrollIntoView({
+        block: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [selectedIndex]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -163,21 +175,23 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({
         top: Math.min(position.top + 28, window.innerHeight - 340),
         left: Math.min(position.left, window.innerWidth - 300),
       }}
-      className="z-50 w-72 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-100"
+      className="z-50 w-72 rounded-2xl border border-stone-200 dark:border-stone-800 bg-[#FAF8F5] dark:bg-[#141312] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-100"
     >
-      <div className="p-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+      {/* Search Input Bar */}
+      <div className="p-2.5 border-b border-stone-200/80 dark:border-stone-800/80 bg-[#F3EFEA] dark:bg-[#191816]">
         <input
           autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Filter commands..."
-          className="w-full px-2 py-1 text-xs bg-transparent outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
+          className="w-full px-2 py-1 text-xs bg-transparent outline-none text-stone-900 dark:text-stone-100 placeholder:text-stone-400 font-mono"
         />
       </div>
 
+      {/* Scrollable Command Items List */}
       <div className="max-h-64 overflow-y-auto p-1.5 space-y-0.5">
         {filteredItems.length === 0 ? (
-          <div className="p-3 text-center text-xs text-slate-400">
+          <div className="p-3 text-center text-xs text-stone-400">
             No matching blocks found
           </div>
         ) : (
@@ -187,20 +201,23 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({
             return (
               <button
                 key={item.type}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
                 type="button"
                 onClick={() => onSelect(item.type)}
                 onMouseEnter={() => setSelectedIndex(index)}
-                className={`w-full flex items-start gap-2.5 px-2.5 py-2 rounded-lg text-left transition-colors ${
+                className={`w-full flex items-start gap-2.5 px-2.5 py-2 rounded-xl text-left transition cursor-pointer ${
                   isSelected
-                    ? "bg-indigo-50 dark:bg-indigo-950/60 text-indigo-900 dark:text-indigo-200"
-                    : "hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300"
+                    ? "bg-stone-200/80 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 shadow-2xs font-semibold"
+                    : "text-stone-700 dark:text-stone-300 hover:bg-stone-200/40 dark:hover:bg-stone-800/40 hover:text-stone-900 dark:hover:text-stone-100"
                 }`}
               >
                 <div
-                  className={`p-1.5 rounded-md mt-0.5 ${
+                  className={`p-1.5 rounded-lg mt-0.5 transition ${
                     isSelected
-                      ? "bg-indigo-600 text-white"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+                      ? "bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+                      : "bg-stone-200/60 dark:bg-stone-800 text-stone-600 dark:text-stone-400"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -209,7 +226,7 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({
                   <div className="text-xs font-semibold leading-tight">
                     {item.title}
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                  <div className="text-[11px] text-stone-500 dark:text-stone-400 truncate mt-0.5">
                     {item.description}
                   </div>
                 </div>

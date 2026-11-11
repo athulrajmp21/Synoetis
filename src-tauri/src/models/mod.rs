@@ -1,3 +1,17 @@
+pub mod academic;
+pub mod analytics;
+pub mod backup;
+pub mod career;
 pub mod dashboard;
+pub mod dsa;
+pub mod goal;
+pub mod habit;
+pub mod note;
+pub mod project;
+pub mod resource;
+pub mod search;
 pub mod settings;
+pub mod snippet;
+pub mod srs;
 pub mod system;
+pub mod task;
