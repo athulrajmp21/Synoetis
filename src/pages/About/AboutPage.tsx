@@ -15,7 +15,7 @@ export const AboutPage: React.FC = () => {
               Synoetis
             </h1>
             <span className="text-[11px] px-2 py-0.5 rounded-full font-mono bg-stone-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium">
-              v1.0.0 • Desktop
+              v1.0.1 • Desktop
             </span>
           </div>
           <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">

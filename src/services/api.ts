@@ -59,7 +59,7 @@ export const systemService = {
   async getSystemInfo(): Promise<SystemInfo> {
     if (!isTauriEnvironment()) {
       return {
-        app_version: "1.0.0",
+        app_version: "1.0.1",
         os: "Windows",
         db_path: "Local SQLite (synoetis.db)",
         total_tables: 20,
@@ -69,7 +69,7 @@ export const systemService = {
       return await invoke<SystemInfo>("get_system_info");
     } catch {
       return {
-        app_version: "1.0.0",
+        app_version: "1.0.1",
         os: "Windows",
         db_path: "Local SQLite (synoetis.db)",
         total_tables: 20,

@@ -1,6 +1,6 @@
 [package]
 name = "synoetis"
-version = "1.0.0"
+version = "1.0.1"
 description = "Synoetis - Second Brain & Engineering Operating System"
 authors = ["Synoetis Team"]
 edition = "2021"

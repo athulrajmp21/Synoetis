@@ -86,7 +86,7 @@ export const Sidebar: React.FC = () => {
                   Synoetis
                 </span>
                 <span className="text-[10px] text-stone-400 dark:text-stone-500 font-mono">
-                  Engine v1.0
+                  Engine v1.0.1
                 </span>
               </div>
             )}
