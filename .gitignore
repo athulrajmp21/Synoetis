@@ -29,6 +29,8 @@ src-tauri/target/
 # Binaries and installers
 *.exe
 *.msi
+*.msix
+*.msixbundle
 *.zip
 *.sig
 

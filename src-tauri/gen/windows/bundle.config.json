@@ -1,0 +1,25 @@
+{
+  "identifier": "AtomerX.Synoetis",
+  "publisher": "CN=B02D7693-0C55-4BE8-972F-26E689248F5B",
+  "publisherDisplayName": "AtomerX",
+  "displayName": "Synoetis",
+  "description": "All-in-one developer and student productivity workspace",
+  "capabilities": {
+    "general": [
+      "internetClient"
+    ]
+  },
+  "extensions": {
+    "shareTarget": false,
+    "fileAssociations": [],
+    "protocolHandlers": []
+  },
+  "signing": {
+    "pfx": null,
+    "pfxPassword": null
+  },
+  "resourceIndex": {
+    "enabled": false,
+    "keepConfig": false
+  }
+}
